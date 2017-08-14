@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Lockscreen version="1" frameRate="30" screenWidth="1080" >
+	<Var name="change" type="number"/>
+	<Var name="switch_1" value="0" type="number"/>
+	<Var name="switch_2" value="0" type="number"/>
+	<Var name="plane">
+		<VariableAnimation initPause="true" loop="false">
+			<AniFrame value="0" time="0" easeType="CircEaseOut"/>
+			<AniFrame value="1480" time="2000"/>
+		</VariableAnimation>
+	</Var>
+	
+	
+	<Image x="0" y="0"  alpha="255+#unlocker.move_y/3" srcExp="'bg/'+#change+'.jpg'"/>
+
+	<Group>
+	    <Time x="540" y="400" align="center"  space="20" src="t/t.png"/>
+		<DateTime x="540" y="600" align="center" format="M月d日 E aa" size="50" color="#ffffff" alpha="220"/>
+	</Group>
+	
+	<Group>
+		<Image x="540" y="1450" align="center" srcExp="'switch/switch_'+#switch_1+'.png'"/>
+		<Button x="540" y="1450" w="216" h="128" align="center">
+			<Triggers>
+				<Trigger action="up">
+					<VariableCommand name="switch_1" expression="ifelse(#switch_1,0,1)"/>
+				    <VariableCommand name="change" expression="ifelse(#change,0,1)"/>
+				</Trigger>
+			</Triggers>
+		</Button> 
+    </Group>
+	
+	<Group>
+	    <Image x="#plane-200" y="900-#plane/2" src="animation/plane.png"/>
+
+	    <Button x="910" y="1450" w="80" h="80" align="center">
+	    	<Normal>
+	            <Image x="910" y="1450" align="center" src="switch/button_0.png"/>
+	    	</Normal>
+	    	
+	    	<Pressed>
+	    		<Image x="910" y="1450" align="center" src="switch/button_1.png"/>
+	    	</Pressed>
+	    	
+	    	<Triggers>
+	    		<Trigger action="up">
+	    			<Command target="plane.animation" value="play(0,2000)"/> 
+	    		</Trigger>
+	    	</Triggers>
+	    </Button>
+	</Group>
+	
+
+	
+	<Group>
+		
+		<!--<Image x="540" y="1100" w="946" h="700" align="center" alignV="center" Alpha="255" src="bg/bg_0.png"/>-->
+		<Rectangle name="mask" x="67.5" y="690" w="946" h="700" fillColor="#000000" >
+			<Button x="87.5" y="710" w="371.25" h="660" >
+				<Normal>
+					<Image x="87.5" y="710" w="371.25" h="660" src="bg/0.jpg"/>
+				</Normal>
+			</Button>
+			
+			<Button x="487.75" y="710" w="371.25" h="660" >
+				<Normal>
+					<Image x="487.75" y="710" w="371.25" h="660" src="bg/1.jpg"/>
+				</Normal>
+			</Button>
+			
+			<AlphaAnimation initPause="true" loop="false">
+				<Alpha a="0" time="0"/>
+				<Alpha a="127.5" time="1000"/>
+			</AlphaAnimation>
+		</Rectangle>
+		
+		<Image x="270" y="1450" align="center" srcExp="'switch/switch_'+#switch_2+'.png'"/>
+		<Button x="270" y="1450" w="216" h="128" align="center">
+			<Triggers>
+				<Trigger action="up">
+					<VariableCommand name="switch_2" expression="ifelse(#switch_2,0,1)"/>
+					<Command target="mask.animation" value="play(1000*(!#switch_2),1000*#switch_2)"/>
+				</Trigger>
+			</Triggers>
+		</Button> 
+    </Group>
+	
+
+	
+	
+
+	
+
+
+
+	
+	<Image x="200+#unlocker.move_x" y="1650" src="arrow/right.png"  alpha="120" />
+	<Unlocker name="unlocker">
+		<StartPoint x="200" y="1650" w="200" h="200"/>
+		<EndPoint x="780" y="1650" w="200" h="200">
+			<Path tolerance="600">
+				<Position x="200" y="1650"/>
+				<Position x="780" y="1650"/>
+			</Path>
+		</EndPoint>
+	</Unlocker>
+</Lockscreen>
